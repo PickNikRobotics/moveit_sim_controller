@@ -12,12 +12,11 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 ## System dependencies are found with CMake's conventions
-find_package(Boost REQUIRED COMPONENTS system)
-
+#find_package(Boost REQUIRED COMPONENTS system)
 
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES moveit_sim_controller
+  LIBRARIES sim_hardware_interface
 #  CATKIN_DEPENDS moveit_core ros_control_boilerplate roscpp
 #  DEPENDS system_lib
 )
@@ -27,10 +26,16 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-## Declare a cpp executable
-add_executable(sim_hardware_interface src/sim_hardware_interface.cpp)
-add_dependencies(sim_hardware_interface moveit_sim_controller_generate_messages_cpp)
+# Hardware Interface
+add_library(sim_hardware_interface src/sim_hardware_interface.cpp)
 target_link_libraries(sim_hardware_interface
+  ${catkin_LIBRARIES}
+)
+
+## Declare a cpp executable
+add_executable(sim_hardware_main src/sim_hardware_main.cpp)
+target_link_libraries(sim_hardware_main
+  sim_hardware_interface
   ${catkin_LIBRARIES}
 )
 
