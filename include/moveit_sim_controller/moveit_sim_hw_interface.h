@@ -32,33 +32,40 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *********************************************************************/
 
-/* Author: Dave Coleman
-   Desc:   Example ros_control main() entry point for controlling robots in ROS
+/* Author: Dave Coleman <dave@dav.ee>
+   Desc:   Simulates a robot using ros_control controllers
 */
 
-#include <ros_control_boilerplate/generic_hardware_control_loop.h>
-#include <moveit_sim_controller/sim_hardware_interface.h>
+// ROS
+#include <ros/ros.h>
+#include <ros_control_boilerplate/sim_hw_interface.h>
+#include <moveit/robot_state/robot_state.h>
+#include <moveit/robot_model_loader/robot_model_loader.h>
 
-int main(int argc, char** argv)
+namespace moveit_sim_controller
 {
-  ros::init(argc, argv, "moveit_sim_hardware_interface");
-  ros::NodeHandle nh;
 
-  // NOTE: We run the ROS loop in a separate thread as external calls such
-  // as service callbacks to load controllers can block the (main) control loop
-  ros::AsyncSpinner spinner(2);
-  spinner.start();
+static const std::string ROBOT_DESCRIPTION = "robot_description";
+static const std::string JOINT_MODEL_GROUP = "whole_body";
+static const std::string JOINT_MODEL_GROUP_POSE = "home";
 
-  // Create the hardware interface specific to your robot
-  int joint_mode = 0; // position
-  boost::shared_ptr<moveit_sim_controller::SimHardwareInterface> hardware_interface;
-  hardware_interface.reset(new moveit_sim_controller::SimHardwareInterface(nh, joint_mode));
+class MoveItSimHWInterface: public ros_control_boilerplate::SimHWInterface
+{
+public:
 
-  // Start the control loop
-  ros_control_boilerplate::GenericHardwareControlLoop control_loop(nh, hardware_interface);
+  /**
+   * \brief Constructor
+   */
+  MoveItSimHWInterface(ros::NodeHandle& nh, urdf::Model* urdf_model = NULL);
 
-  // Wait until shutdown signal recieved
-  ros::waitForShutdown();
+  void loadDefaultJointValues();
 
-  return 0;
-}
+private:
+
+}; // end class
+
+// Create boost pointers for this class
+typedef boost::shared_ptr<MoveItSimHWInterface> MoveItSimHWInterfacePtr;
+typedef boost::shared_ptr<const MoveItSimHWInterface> MoveItSimHWInterfaceConstPtr;
+
+} // end namespace

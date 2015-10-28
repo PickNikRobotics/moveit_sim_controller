@@ -16,7 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package(
 #  INCLUDE_DIRS include
-  LIBRARIES sim_hardware_interface
+  LIBRARIES moveit_sim_hw_interface
 #  CATKIN_DEPENDS moveit_core ros_control_boilerplate roscpp
 #  DEPENDS system_lib
 )
@@ -27,15 +27,15 @@ include_directories(
 )
 
 # Hardware Interface
-add_library(sim_hardware_interface src/sim_hardware_interface.cpp)
-target_link_libraries(sim_hardware_interface
+add_library(moveit_sim_hw_interface src/moveit_sim_hw_interface.cpp)
+target_link_libraries(moveit_sim_hw_interface
   ${catkin_LIBRARIES}
 )
 
 ## Declare a cpp executable
-add_executable(sim_hardware_main src/sim_hardware_main.cpp)
-target_link_libraries(sim_hardware_main
-  sim_hardware_interface
+add_executable(moveit_sim_hardware_main src/moveit_sim_hardware_main.cpp)
+target_link_libraries(moveit_sim_hardware_main
+  moveit_sim_hw_interface
   ${catkin_LIBRARIES}
 )
 

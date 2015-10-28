@@ -36,22 +36,22 @@
    Desc:   Simulates a robot using ros_control controllers
 */
 
-#include <moveit_sim_controller/sim_hardware_interface.h>
+#include <moveit_sim_controller/moveit_sim_hw_interface.h>
 
 namespace moveit_sim_controller
 {
 
-SimHardwareInterface::SimHardwareInterface(ros::NodeHandle& nh, int joint_mode)
-  : ros_control_boilerplate::GenericHardwareInterface(nh, joint_mode)
+MoveItSimHWInterface::MoveItSimHWInterface(ros::NodeHandle& nh, urdf::Model* urdf_model)
+  : ros_control_boilerplate::SimHWInterface(nh, urdf_model)
 {
 
   // Load default joint values
   loadDefaultJointValues();
 
-  ROS_INFO_STREAM_NAMED("sim_hardware_interface","SimHardwareInterface Ready.");
+  ROS_INFO_STREAM_NAMED("moveit_sim_hw_interface","MoveItSimHWInterface Ready.");
 }
 
-void SimHardwareInterface::loadDefaultJointValues()
+void MoveItSimHWInterface::loadDefaultJointValues()
 {
   // Load the robot loader
   robot_model_loader::RobotModelLoader robot_model_loader(ROBOT_DESCRIPTION);

@@ -32,40 +32,33 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *********************************************************************/
 
-/* Author: Dave Coleman <dave@dav.ee>
-   Desc:   Simulates a robot using ros_control controllers
+/* Author: Dave Coleman
+   Desc:   Example ros_control main() entry point for controlling robots in ROS
 */
 
-// ROS
-#include <ros/ros.h>
-#include <ros_control_boilerplate/generic_hardware_interface.h>
-#include <moveit/robot_state/robot_state.h>
-#include <moveit/robot_model_loader/robot_model_loader.h>
+#include <ros_control_boilerplate/generic_hw_control_loop.h>
+#include <moveit_sim_controller/moveit_sim_hw_interface.h>
 
-namespace moveit_sim_controller
+int main(int argc, char** argv)
 {
+  ros::init(argc, argv, "moveit_moveit_sim_hw_interface");
+  ros::NodeHandle nh;
 
-static const std::string ROBOT_DESCRIPTION = "robot_description";
-static const std::string JOINT_MODEL_GROUP = "whole_body";
-static const std::string JOINT_MODEL_GROUP_POSE = "home";
+  // NOTE: We run the ROS loop in a separate thread as external calls such
+  // as service callbacks to load controllers can block the (main) control loop
+  ros::AsyncSpinner spinner(2);
+  spinner.start();
 
-class SimHardwareInterface: public ros_control_boilerplate::GenericHardwareInterface
-{
-public:
+  // Create the hardware interface specific to your robot
+  int joint_mode = 0; // position
+  boost::shared_ptr<moveit_sim_controller::MoveItSimHWInterface> hardware_interface;
+  hardware_interface.reset(new moveit_sim_controller::MoveItSimHWInterface(nh));
 
-  /**
-   * \brief Constructor
-   */
-  SimHardwareInterface(ros::NodeHandle& nh, int joint_mode);
+  // Start the control loop
+  ros_control_boilerplate::GenericHWControlLoop control_loop(nh, hardware_interface);
 
-  void loadDefaultJointValues();
+  // Wait until shutdown signal recieved
+  ros::waitForShutdown();
 
-private:
-
-}; // end class
-
-// Create boost pointers for this class
-typedef boost::shared_ptr<SimHardwareInterface> SimHardwareInterfacePtr;
-typedef boost::shared_ptr<const SimHardwareInterface> SimHardwareInterfaceConstPtr;
-
-} // end namespace
+  return 0;
+}
