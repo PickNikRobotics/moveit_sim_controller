@@ -15,10 +15,11 @@
   <author email="davetcoleman@gmail.com">Dave Coleman</author>
 
   <buildtool_depend>catkin</buildtool_depend>
-  
+
   <build_depend>moveit_core</build_depend>
   <build_depend>moveit_ros_planning</build_depend>
   <build_depend>ros_control_boilerplate</build_depend>
+  <build_depend>ros_param_shortcuts</build_depend>
   <build_depend>roscpp</build_depend>
 
   <run_depend>moveit_core</run_depend>

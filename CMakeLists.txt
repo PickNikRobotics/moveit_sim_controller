@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   moveit_core
   moveit_ros_planning
   ros_control_boilerplate
+  ros_param_shortcuts
   roscpp
 )
 
@@ -33,9 +34,8 @@ target_link_libraries(moveit_sim_hw_interface
 )
 
 ## Declare a cpp executable
-add_executable(moveit_sim_hardware_main src/moveit_sim_hardware_main.cpp)
-target_link_libraries(moveit_sim_hardware_main
+add_executable(moveit_sim_hw_main src/moveit_sim_hw_main.cpp)
+target_link_libraries(moveit_sim_hw_main
   moveit_sim_hw_interface
   ${catkin_LIBRARIES}
 )
-

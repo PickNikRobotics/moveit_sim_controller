@@ -33,7 +33,7 @@
  *********************************************************************/
 
 /* Author: Dave Coleman
-   Desc:   Example ros_control main() entry point for controlling robots in ROS
+   Desc:   MoveIt! robot simulator using ros_control
 */
 
 #include <ros_control_boilerplate/generic_hw_control_loop.h>
@@ -41,7 +41,7 @@
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "moveit_moveit_sim_hw_interface");
+  ros::init(argc, argv, "moveit_sim_hw_main");
   ros::NodeHandle nh;
 
   // NOTE: We run the ROS loop in a separate thread as external calls such
@@ -50,7 +50,6 @@ int main(int argc, char** argv)
   spinner.start();
 
   // Create the hardware interface specific to your robot
-  int joint_mode = 0; // position
   boost::shared_ptr<moveit_sim_controller::MoveItSimHWInterface> hardware_interface;
   hardware_interface.reset(new moveit_sim_controller::MoveItSimHWInterface(nh));
 

@@ -38,12 +38,21 @@
 
 #include <moveit_sim_controller/moveit_sim_hw_interface.h>
 
+// ROS parameter loading
+#include <ros_param_shortcuts/ros_param_shortcuts.h>
+
 namespace moveit_sim_controller
 {
 
 MoveItSimHWInterface::MoveItSimHWInterface(ros::NodeHandle& nh, urdf::Model* urdf_model)
   : ros_control_boilerplate::SimHWInterface(nh, urdf_model)
 {
+  // Load rosparams
+  const std::string parent_name = "moveit_sim_hw_interface";  // for namespacing logging messages
+  ros::NodeHandle rosparam_nh(nh_, parent_name);
+  using namespace ros_param_shortcuts;
+  getStringParam(parent_name, rosparam_nh, "joint_model_group", joint_model_group_);
+  getStringParam(parent_name, rosparam_nh, "joint_model_group_pose", joint_model_group_pose_);
 
   // Load default joint values
   loadDefaultJointValues();
@@ -58,17 +67,17 @@ void MoveItSimHWInterface::loadDefaultJointValues()
   // Load the robot model
   robot_model::RobotModelPtr robot_model = robot_model_loader.getModel(); // Get a shared pointer to the robot
 
-  if (robot_model->hasJointModelGroup(JOINT_MODEL_GROUP))
+  if (robot_model->hasJointModelGroup(joint_model_group_))
   {
-    moveit::core::JointModelGroup* jmg = robot_model->getJointModelGroup("whole_body");
+    moveit::core::JointModelGroup* jmg = robot_model->getJointModelGroup(joint_model_group_);
 
     // Load a robot state
     moveit::core::RobotState robot_state(robot_model);
 
     // Check for existance of joint model group
-    if (robot_state.setToDefaultValues(jmg, JOINT_MODEL_GROUP_POSE))
+    if (robot_state.setToDefaultValues(jmg, joint_model_group_pose_))
     {
-      ROS_INFO_STREAM_NAMED("loadDefaultJointValues","Set joints to pose " << JOINT_MODEL_GROUP_POSE);
+      ROS_INFO_STREAM_NAMED("loadDefaultJointValues","Set joints to pose " << joint_model_group_pose_);
 
       for (std::size_t i = 0; i < joint_names_.size(); ++i)
       {
@@ -92,10 +101,10 @@ void MoveItSimHWInterface::loadDefaultJointValues()
       }
     }
     else
-      ROS_WARN_STREAM_NAMED("loadDefaultJointValues","Unable to find pose " << JOINT_MODEL_GROUP_POSE << " for the fake controller manager");
+      ROS_WARN_STREAM_NAMED("loadDefaultJointValues","Unable to find pose " << joint_model_group_pose_ << " for the fake controller manager");
   }
   else
-    ROS_WARN_STREAM_NAMED("loadDefaultJointValues","Unable to find joint model group " << JOINT_MODEL_GROUP << " for the fake controller manager");
+    ROS_WARN_STREAM_NAMED("loadDefaultJointValues","Unable to find joint model group " << joint_model_group_ << " for the fake controller manager");
 }
 
 } // end namespace

@@ -36,6 +36,9 @@
    Desc:   Simulates a robot using ros_control controllers
 */
 
+#ifndef MOVEIT_SIM_CONTROLLER__MOVEIT_SIM_HW_INTERFACE_H
+#define MOVEIT_SIM_CONTROLLER__MOVEIT_SIM_HW_INTERFACE_H
+
 // ROS
 #include <ros/ros.h>
 #include <ros_control_boilerplate/sim_hw_interface.h>
@@ -46,8 +49,6 @@ namespace moveit_sim_controller
 {
 
 static const std::string ROBOT_DESCRIPTION = "robot_description";
-static const std::string JOINT_MODEL_GROUP = "whole_body";
-static const std::string JOINT_MODEL_GROUP_POSE = "home";
 
 class MoveItSimHWInterface: public ros_control_boilerplate::SimHWInterface
 {
@@ -62,10 +63,15 @@ public:
 
 private:
 
-}; // end class
+  std::string joint_model_group_;
+  std::string joint_model_group_pose_;
+
+}; // class
 
 // Create boost pointers for this class
 typedef boost::shared_ptr<MoveItSimHWInterface> MoveItSimHWInterfacePtr;
 typedef boost::shared_ptr<const MoveItSimHWInterface> MoveItSimHWInterfaceConstPtr;
 
-} // end namespace
+} // namespace
+
+#endif
