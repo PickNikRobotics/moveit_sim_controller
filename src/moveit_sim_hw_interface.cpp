@@ -54,6 +54,9 @@ MoveItSimHWInterface::MoveItSimHWInterface(ros::NodeHandle& nh, urdf::Model* urd
   getStringParam(parent_name, rosparam_nh, "joint_model_group", joint_model_group_);
   getStringParam(parent_name, rosparam_nh, "joint_model_group_pose", joint_model_group_pose_);
 
+  // Load the loader
+  robot_model_loader_.reset(new robot_model_loader::RobotModelLoader(ROBOT_DESCRIPTION));
+
   // Load default joint values
   loadDefaultJointValues();
 
@@ -62,49 +65,49 @@ MoveItSimHWInterface::MoveItSimHWInterface(ros::NodeHandle& nh, urdf::Model* urd
 
 void MoveItSimHWInterface::loadDefaultJointValues()
 {
-  // Load the robot loader
-  robot_model_loader::RobotModelLoader robot_model_loader(ROBOT_DESCRIPTION);
   // Load the robot model
-  robot_model::RobotModelPtr robot_model = robot_model_loader.getModel(); // Get a shared pointer to the robot
+  robot_model::RobotModelPtr robot_model = robot_model_loader_->getModel(); // Get a shared pointer to the robot
 
-  if (robot_model->hasJointModelGroup(joint_model_group_))
+  if (!robot_model->hasJointModelGroup(joint_model_group_))
   {
-    moveit::core::JointModelGroup* jmg = robot_model->getJointModelGroup(joint_model_group_);
-
-    // Load a robot state
-    moveit::core::RobotState robot_state(robot_model);
-
-    // Check for existance of joint model group
-    if (robot_state.setToDefaultValues(jmg, joint_model_group_pose_))
-    {
-      ROS_INFO_STREAM_NAMED("loadDefaultJointValues","Set joints to pose " << joint_model_group_pose_);
-
-      for (std::size_t i = 0; i < joint_names_.size(); ++i)
-      {
-        const moveit::core::JointModel* jm = robot_state.getJointModel(joint_names_[i]);
-
-        // Error check
-        if (!jm)
-        {
-          ROS_WARN_STREAM_NAMED("loadDefaultJointValues","Unable to find joint model group: " << joint_names_[i]);
-          continue;
-        }
-        if (jm->getVariableCount() != 1)
-        {
-          ROS_WARN_STREAM_NAMED("loadDefaultJointValues","Fake joint controller does not currently accept more than 1 variable per joint");
-          continue;
-        }
-
-        // Set position from SRDF
-        joint_position_[i] = robot_state.getJointPositions(jm)[0];
-        joint_position_command_[i] = robot_state.getJointPositions(jm)[0];
-      }
-    }
-    else
-      ROS_WARN_STREAM_NAMED("loadDefaultJointValues","Unable to find pose " << joint_model_group_pose_ << " for the fake controller manager");
-  }
-  else
     ROS_WARN_STREAM_NAMED("loadDefaultJointValues","Unable to find joint model group " << joint_model_group_ << " for the fake controller manager");
+    return;
+  }
+
+  moveit::core::JointModelGroup* jmg = robot_model->getJointModelGroup(joint_model_group_);
+
+  // Load a robot state
+  moveit::core::RobotState robot_state(robot_model);
+
+  // Check for existance of joint model group
+  if (!robot_state.setToDefaultValues(jmg, joint_model_group_pose_))
+  {
+    ROS_WARN_STREAM_NAMED("loadDefaultJointValues","Unable to find pose " << joint_model_group_pose_ << " for the fake controller manager");
+    return;
+  }
+
+  ROS_INFO_STREAM_NAMED("loadDefaultJointValues","Set joints to pose " << joint_model_group_pose_);
+
+  for (std::size_t i = 0; i < joint_names_.size(); ++i)
+  {
+    const moveit::core::JointModel* jm = robot_state.getJointModel(joint_names_[i]);
+
+    // Error check
+    if (!jm)
+    {
+      ROS_WARN_STREAM_NAMED("loadDefaultJointValues","Unable to find joint model group: " << joint_names_[i]);
+      continue;
+    }
+    if (jm->getVariableCount() != 1)
+    {
+      ROS_WARN_STREAM_NAMED("loadDefaultJointValues","Fake joint controller does not currently accept more than 1 variable per joint");
+      continue;
+    }
+
+    // Set position from SRDF
+    joint_position_[i] = robot_state.getJointPositions(jm)[0];
+    joint_position_command_[i] = robot_state.getJointPositions(jm)[0];
+  }
 }
 
 } // end namespace

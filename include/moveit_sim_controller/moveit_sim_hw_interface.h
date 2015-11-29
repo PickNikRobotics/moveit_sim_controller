@@ -66,6 +66,10 @@ private:
   std::string joint_model_group_;
   std::string joint_model_group_pose_;
 
+  // Note: this doesn't need to be a member variable (only used once) but there are warnings about
+  // unloading shared objects so this is a work around at least for now
+  robot_model_loader::RobotModelLoaderPtr robot_model_loader_;
+
 }; // class
 
 // Create boost pointers for this class
