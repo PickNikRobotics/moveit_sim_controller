@@ -39,7 +39,7 @@
 #include <moveit_sim_controller/moveit_sim_hw_interface.h>
 
 // ROS parameter loading
-#include <ros_param_shortcuts/ros_param_shortcuts.h>
+#include <rosparam_shortcuts/rosparam_shortcuts.h>
 
 namespace moveit_sim_controller
 {
@@ -50,7 +50,7 @@ MoveItSimHWInterface::MoveItSimHWInterface(ros::NodeHandle& nh, urdf::Model* urd
   // Load rosparams
   const std::string parent_name = "moveit_sim_hw_interface";  // for namespacing logging messages
   ros::NodeHandle rosparam_nh(nh_, parent_name);
-  using namespace ros_param_shortcuts;
+  using namespace rosparam_shortcuts;
   getStringParam(parent_name, rosparam_nh, "joint_model_group", joint_model_group_);
   getStringParam(parent_name, rosparam_nh, "joint_model_group_pose", joint_model_group_pose_);
 

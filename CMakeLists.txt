@@ -8,7 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   moveit_core
   moveit_ros_planning
   ros_control_boilerplate
-  ros_param_shortcuts
+  rosparam_shortcuts
   roscpp
 )
 
