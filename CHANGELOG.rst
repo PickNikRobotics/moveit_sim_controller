@@ -2,8 +2,8 @@
 Changelog for package moveit_sim_controller
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.3 (2015-12-10)
+------------------
 * Fix missing dep
 * Contributors: Dave Coleman
 
