@@ -25,6 +25,7 @@
   <run_depend>moveit_core</run_depend>
   <run_depend>moveit_ros_planning</run_depend>
   <run_depend>ros_control_boilerplate</run_depend>
+  <run_depend>rosparam_shortcuts</run_depend>
   <run_depend>roscpp</run_depend>
 
   <export>
