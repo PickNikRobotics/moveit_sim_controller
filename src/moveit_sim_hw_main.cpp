@@ -50,8 +50,9 @@ int main(int argc, char** argv)
   spinner.start();
 
   // Create the hardware interface specific to your robot
-  boost::shared_ptr<moveit_sim_controller::MoveItSimHWInterface> hardware_interface;
-  hardware_interface.reset(new moveit_sim_controller::MoveItSimHWInterface(nh));
+  boost::shared_ptr<moveit_sim_controller::MoveItSimHWInterface> hardware_interface(
+      new moveit_sim_controller::MoveItSimHWInterface(nh));
+  hardware_interface->init();
 
   // Start the control loop
   ros_control_boilerplate::GenericHWControlLoop control_loop(nh, hardware_interface);

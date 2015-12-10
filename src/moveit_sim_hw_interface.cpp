@@ -33,7 +33,7 @@
  *********************************************************************/
 
 /* Author: Dave Coleman <dave@dav.ee>
-   Desc:   Simulates a robot using ros_control controllers
+   Desc:   Simulates a robot using ros_control controllers with a default position loaded from MoveIt!
 */
 
 #include <moveit_sim_controller/moveit_sim_hw_interface.h>
@@ -43,16 +43,15 @@
 
 namespace moveit_sim_controller
 {
-
 MoveItSimHWInterface::MoveItSimHWInterface(ros::NodeHandle& nh, urdf::Model* urdf_model)
-  : ros_control_boilerplate::SimHWInterface(nh, urdf_model)
+  : ros_control_boilerplate::SimHWInterface(nh, urdf_model), name_("moveit_sim_hw_interface")
 {
   // Load rosparams
-  const std::string parent_name = "moveit_sim_hw_interface";  // for namespacing logging messages
-  ros::NodeHandle rosparam_nh(nh_, parent_name);
-  using namespace rosparam_shortcuts;
-  getStringParam(parent_name, rosparam_nh, "joint_model_group", joint_model_group_);
-  getStringParam(parent_name, rosparam_nh, "joint_model_group_pose", joint_model_group_pose_);
+  ros::NodeHandle rpnh(nh_, name_);
+  std::size_t error = 0;
+  error += !rosparam_shortcuts::getStringParam(name_, rpnh, "joint_model_group", joint_model_group_);
+  error += !rosparam_shortcuts::getStringParam(name_, rpnh, "joint_model_group_pose", joint_model_group_pose_);
+  rosparam_shortcuts::shutdownIfParamErrors(name_, error);
 
   // Load the loader
   robot_model_loader_.reset(new robot_model_loader::RobotModelLoader(ROBOT_DESCRIPTION));
@@ -60,17 +59,18 @@ MoveItSimHWInterface::MoveItSimHWInterface(ros::NodeHandle& nh, urdf::Model* urd
   // Load default joint values
   loadDefaultJointValues();
 
-  ROS_INFO_STREAM_NAMED("moveit_sim_hw_interface","MoveItSimHWInterface Ready.");
+  ROS_INFO_STREAM_NAMED(name_, "MoveItSimHWInterface Ready.");
 }
 
 void MoveItSimHWInterface::loadDefaultJointValues()
 {
   // Load the robot model
-  robot_model::RobotModelPtr robot_model = robot_model_loader_->getModel(); // Get a shared pointer to the robot
+  robot_model::RobotModelPtr robot_model = robot_model_loader_->getModel();  // Get a shared pointer to the robot
 
   if (!robot_model->hasJointModelGroup(joint_model_group_))
   {
-    ROS_WARN_STREAM_NAMED("loadDefaultJointValues","Unable to find joint model group " << joint_model_group_ << " for the fake controller manager");
+    ROS_WARN_STREAM_NAMED(name_, "Unable to find joint model group "
+                                                        << joint_model_group_ << " for the fake controller manager");
     return;
   }
 
@@ -82,11 +82,12 @@ void MoveItSimHWInterface::loadDefaultJointValues()
   // Check for existance of joint model group
   if (!robot_state.setToDefaultValues(jmg, joint_model_group_pose_))
   {
-    ROS_WARN_STREAM_NAMED("loadDefaultJointValues","Unable to find pose " << joint_model_group_pose_ << " for the fake controller manager");
+    ROS_WARN_STREAM_NAMED(name_, "Unable to find pose " << joint_model_group_pose_
+                                                                           << " for the fake controller manager");
     return;
   }
 
-  ROS_INFO_STREAM_NAMED("loadDefaultJointValues","Set joints to pose " << joint_model_group_pose_);
+  ROS_INFO_STREAM_NAMED(name_, "Set joints to pose " << joint_model_group_pose_);
 
   for (std::size_t i = 0; i < joint_names_.size(); ++i)
   {
@@ -95,12 +96,13 @@ void MoveItSimHWInterface::loadDefaultJointValues()
     // Error check
     if (!jm)
     {
-      ROS_WARN_STREAM_NAMED("loadDefaultJointValues","Unable to find joint model group: " << joint_names_[i]);
+      ROS_WARN_STREAM_NAMED(name_, "Unable to find joint model group: " << joint_names_[i]);
       continue;
     }
     if (jm->getVariableCount() != 1)
     {
-      ROS_WARN_STREAM_NAMED("loadDefaultJointValues","Fake joint controller does not currently accept more than 1 variable per joint");
+      ROS_WARN_STREAM_NAMED(name_, "Fake joint controller does not currently accept more than 1 "
+                                                      "variable per joint");
       continue;
     }
 
@@ -110,4 +112,4 @@ void MoveItSimHWInterface::loadDefaultJointValues()
   }
 }
 
-} // end namespace
+}  // end namespace

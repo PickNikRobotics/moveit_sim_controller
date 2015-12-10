@@ -2,7 +2,7 @@
 
 A simulation interface for a hardware interface for ros_control, and loads default joint values from SRDF
 
-Intended to replace moveit_fake_controller_manager - this supports simulated trajectory following and loading an inital position
+Intended to replace ``moveit_fake_controller_manager`` - this supports simulated trajectory following and loading an inital position
 
 ## Use
 

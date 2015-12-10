@@ -47,13 +47,11 @@
 
 namespace moveit_sim_controller
 {
-
 static const std::string ROBOT_DESCRIPTION = "robot_description";
 
-class MoveItSimHWInterface: public ros_control_boilerplate::SimHWInterface
+class MoveItSimHWInterface : public ros_control_boilerplate::SimHWInterface
 {
 public:
-
   /**
    * \brief Constructor
    */
@@ -62,6 +60,7 @@ public:
   void loadDefaultJointValues();
 
 private:
+  std::string name_;
 
   std::string joint_model_group_;
   std::string joint_model_group_pose_;
@@ -70,12 +69,12 @@ private:
   // unloading shared objects so this is a work around at least for now
   robot_model_loader::RobotModelLoaderPtr robot_model_loader_;
 
-}; // class
+};  // class
 
 // Create boost pointers for this class
 typedef boost::shared_ptr<MoveItSimHWInterface> MoveItSimHWInterfacePtr;
 typedef boost::shared_ptr<const MoveItSimHWInterface> MoveItSimHWInterfaceConstPtr;
 
-} // namespace
+}  // namespace
 
 #endif
