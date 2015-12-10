@@ -9,7 +9,7 @@ Developed by [Dave Coleman](http://dav.ee/) at the University of Colorado Boulde
 Status:
 
  * [![Build Status](https://travis-ci.org/davetcoleman/moveit_sim_controller.svg)](https://travis-ci.org/davetcoleman/moveit_sim_controller) Travis CI
- * [![Devel Job Status](http://jenkins.ros.org/buildStatus/icon?job=devel-indigo-moveit-sim-controller)](http://jenkins.ros.org/job/devel-indigo-moveit_sim_controller) Devel Job Status
+ * [![Devel Job Status](http://jenkins.ros.org/buildStatus/icon?job=devel-indigo-moveit_sim_controller)](http://jenkins.ros.org/job/devel-indigo-moveit_sim_controller) Devel Job Status
  * [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-moveit-sim-controller_binarydeb_trusty_amd64)](http://jenkins.ros.org/job/ros-indigo-moveit-sim-controller_binarydeb_trusty_amd64/) AMD64 Debian Job Status
 
 ![](resources/screenshot.png)
