@@ -57,6 +57,8 @@ public:
    */
   MoveItSimHWInterface(ros::NodeHandle& nh, urdf::Model* urdf_model = NULL);
 
+  void init();
+
   void loadDefaultJointValues();
 
 private:
@@ -77,4 +79,4 @@ typedef boost::shared_ptr<const MoveItSimHWInterface> MoveItSimHWInterfaceConstP
 
 }  // namespace
 
-#endif
+#endif // MOVEIT_SIM_CONTROLLER__MOVEIT_SIM_HW_INTERFACE_H
