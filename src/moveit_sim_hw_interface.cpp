@@ -50,8 +50,8 @@ MoveItSimHWInterface::MoveItSimHWInterface(ros::NodeHandle& nh, urdf::Model* urd
   // Load rosparams
   ros::NodeHandle rpnh(nh_, name_);
   std::size_t error = 0;
-  error += !rosparam_shortcuts::getStringParam(name_, rpnh, "joint_model_group", joint_model_group_);
-  error += !rosparam_shortcuts::getStringParam(name_, rpnh, "joint_model_group_pose", joint_model_group_pose_);
+  error += !rosparam_shortcuts::get(name_, rpnh, "joint_model_group", joint_model_group_);
+  error += !rosparam_shortcuts::get(name_, rpnh, "joint_model_group_pose", joint_model_group_pose_);
   rosparam_shortcuts::shutdownIfParamErrors(name_, error);
 }
 

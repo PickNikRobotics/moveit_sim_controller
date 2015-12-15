@@ -57,6 +57,7 @@ public:
    */
   MoveItSimHWInterface(ros::NodeHandle& nh, urdf::Model* urdf_model = NULL);
 
+  /** \brief Initialize the robot hardware interface */
   void init();
 
   void loadDefaultJointValues();
