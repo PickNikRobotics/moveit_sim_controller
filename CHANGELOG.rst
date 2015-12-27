@@ -2,8 +2,8 @@
 Changelog for package moveit_sim_controller
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.4 (2015-12-27)
+------------------
 * Improved rosparam_shortcuts api
 * Fixed initialization of default joint positions
 * Fix travis
