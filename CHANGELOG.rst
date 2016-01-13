@@ -2,8 +2,8 @@
 Changelog for package moveit_sim_controller
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.5 (2016-01-13)
+------------------
 * Fixed deprecated API for rosparam_shortcuts
 * Contributors: Dave Coleman
 
