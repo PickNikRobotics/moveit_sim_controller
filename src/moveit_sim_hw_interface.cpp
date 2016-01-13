@@ -44,8 +44,7 @@
 namespace moveit_sim_controller
 {
 MoveItSimHWInterface::MoveItSimHWInterface(ros::NodeHandle& nh, urdf::Model* urdf_model)
-  : ros_control_boilerplate::SimHWInterface(nh, urdf_model)
-  , name_("moveit_sim_hw_interface")
+  : ros_control_boilerplate::SimHWInterface(nh, urdf_model), name_("moveit_sim_hw_interface")
 {
   // Load rosparams
   ros::NodeHandle rpnh(nh_, name_);
@@ -76,8 +75,8 @@ void MoveItSimHWInterface::loadDefaultJointValues()
 
   if (!robot_model->hasJointModelGroup(joint_model_group_))
   {
-    ROS_WARN_STREAM_NAMED(name_, "Unable to find joint model group "
-                                                        << joint_model_group_ << " for the fake controller manager");
+    ROS_WARN_STREAM_NAMED(name_, "Unable to find joint model group " << joint_model_group_ << " for the fake "
+                                                                                              "controller manager");
     return;
   }
 
@@ -89,8 +88,8 @@ void MoveItSimHWInterface::loadDefaultJointValues()
   // Check for existance of joint model group
   if (!robot_state.setToDefaultValues(jmg, joint_model_group_pose_))
   {
-    ROS_WARN_STREAM_NAMED(name_, "Unable to find pose " << joint_model_group_pose_
-                                                                           << " for the fake controller manager");
+    ROS_WARN_STREAM_NAMED(name_, "Unable to find pose " << joint_model_group_pose_ << " for the fake controller "
+                                                                                      "manager");
     return;
   }
 
@@ -109,7 +108,7 @@ void MoveItSimHWInterface::loadDefaultJointValues()
     if (jm->getVariableCount() != 1)
     {
       ROS_WARN_STREAM_NAMED(name_, "Fake joint controller does not currently accept more than 1 "
-                                                      "variable per joint");
+                                   "variable per joint");
       continue;
     }
 
@@ -119,4 +118,4 @@ void MoveItSimHWInterface::loadDefaultJointValues()
   }
 }
 
-}  // end namespace
+}  // namespace moveit_sim_controller

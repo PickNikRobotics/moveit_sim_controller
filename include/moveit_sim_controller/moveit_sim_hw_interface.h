@@ -36,8 +36,11 @@
    Desc:   Simulates a robot using ros_control controllers
 */
 
-#ifndef MOVEIT_SIM_CONTROLLER__MOVEIT_SIM_HW_INTERFACE_H
-#define MOVEIT_SIM_CONTROLLER__MOVEIT_SIM_HW_INTERFACE_H
+#ifndef MOVEIT_SIM_CONTROLLER_MOVEIT_SIM_HW_INTERFACE_H
+#define MOVEIT_SIM_CONTROLLER_MOVEIT_SIM_HW_INTERFACE_H
+
+// C++
+#include <string>
 
 // ROS
 #include <ros/ros.h>
@@ -55,7 +58,7 @@ public:
   /**
    * \brief Constructor
    */
-  MoveItSimHWInterface(ros::NodeHandle& nh, urdf::Model* urdf_model = NULL);
+  explicit MoveItSimHWInterface(ros::NodeHandle& nh, urdf::Model* urdf_model = NULL);
 
   /** \brief Initialize the robot hardware interface */
   void init();
@@ -71,13 +74,12 @@ private:
   // Note: this doesn't need to be a member variable (only used once) but there are warnings about
   // unloading shared objects so this is a work around at least for now
   robot_model_loader::RobotModelLoaderPtr robot_model_loader_;
-
 };  // class
 
 // Create boost pointers for this class
 typedef boost::shared_ptr<MoveItSimHWInterface> MoveItSimHWInterfacePtr;
 typedef boost::shared_ptr<const MoveItSimHWInterface> MoveItSimHWInterfaceConstPtr;
 
-}  // namespace
+}  // namespace moveit_sim_controller
 
-#endif // MOVEIT_SIM_CONTROLLER__MOVEIT_SIM_HW_INTERFACE_H
+#endif  // MOVEIT_SIM_CONTROLLER_MOVEIT_SIM_HW_INTERFACE_H

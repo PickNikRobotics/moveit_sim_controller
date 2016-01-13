@@ -7,6 +7,7 @@ find_package(catkin REQUIRED COMPONENTS
   ros_control_boilerplate
   rosparam_shortcuts
   roscpp
+  roslint
 )
 
 ###################################
@@ -45,6 +46,13 @@ target_link_libraries(moveit_sim_hw_main
   moveit_sim_hw_interface
   ${catkin_LIBRARIES}
 )
+
+#############
+## Testing ##
+#############
+
+## Test for correct C++ source code
+roslint_cpp()
 
 #############
 ## Install ##

@@ -39,6 +39,20 @@ Then load this node with the following ROS params (yaml is suggested use):
 
 See [ros_control_boilerplate](https://github.com/davetcoleman/ros_control_boilerplate) for more detailed instructions about using ros_control to visualize your robot - this package simply inherits from that package and adds some MoveIt! dependencies that can parse SRDFs for your initial state.
 
+## Testing and Linting
+
+To run [roslint](http://wiki.ros.org/roslint), use the following command with [catkin-tools](https://catkin-tools.readthedocs.org/):
+
+    catkin build --no-status --no-deps --this --make-args roslint
+
+To run [catkin lint](https://pypi.python.org/pypi/catkin_lint), use the following command with [catkin-tools](https://catkin-tools.readthedocs.org/):
+
+    catkin lint -W2
+
+There are currently no unit or integration tests for this package. If there were you would use the following command with [catkin-tools](https://catkin-tools.readthedocs.org/):
+
+    catkin run_tests --no-deps --this -i
+
 ## Contribute
 
 Please send PRs for new helper functions, fixes, etc!

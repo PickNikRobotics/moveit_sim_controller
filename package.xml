@@ -21,6 +21,7 @@
   <build_depend>ros_control_boilerplate</build_depend>
   <build_depend>rosparam_shortcuts</build_depend>
   <build_depend>roscpp</build_depend>
+  <build_depend>roslint</build_depend>
 
   <run_depend>moveit_core</run_depend>
   <run_depend>moveit_ros_planning</run_depend>
