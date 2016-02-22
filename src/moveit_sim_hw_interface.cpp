@@ -75,8 +75,8 @@ void MoveItSimHWInterface::loadDefaultJointValues()
 
   if (!robot_model->hasJointModelGroup(joint_model_group_))
   {
-    ROS_WARN_STREAM_NAMED(name_, "Unable to find joint model group " << joint_model_group_ << " for the fake "
-                                                                                              "controller manager");
+    ROS_WARN_STREAM_NAMED(name_, "Unable to find joint model group '" << joint_model_group_
+                          << "' for the fake controller manager");
     return;
   }
 
