@@ -73,6 +73,7 @@ void MoveItSimHWInterface::loadDefaultJointValues()
   // Load the robot model
   robot_model::RobotModelPtr robot_model = robot_model_loader_->getModel();  // Get a shared pointer to the robot
 
+  // Check for existance of joint model group
   if (!robot_model->hasJointModelGroup(joint_model_group_))
   {
     ROS_WARN_STREAM_NAMED(name_, "Unable to find joint model group '" << joint_model_group_
@@ -85,14 +86,16 @@ void MoveItSimHWInterface::loadDefaultJointValues()
   // Load a robot state
   moveit::core::RobotState robot_state(robot_model);
 
-  // Check for existance of joint model group
+  // First set whole robot default values to ensure there are no 'nan's
+  robot_state.setToDefaultValues();
+
+  // Attempt to set pose
   if (!robot_state.setToDefaultValues(jmg, joint_model_group_pose_))
   {
     ROS_WARN_STREAM_NAMED(name_, "Unable to find pose " << joint_model_group_pose_ << " for the fake controller "
                                                                                       "manager");
     return;
   }
-
   ROS_INFO_STREAM_NAMED(name_, "Set joints to pose " << joint_model_group_pose_);
 
   for (std::size_t i = 0; i < joint_names_.size(); ++i)
@@ -114,7 +117,20 @@ void MoveItSimHWInterface::loadDefaultJointValues()
 
     // Set position from SRDF
     joint_position_[i] = robot_state.getJointPositions(jm)[0];
-    joint_position_command_[i] = robot_state.getJointPositions(jm)[0];
+    joint_position_command_[i] = joint_position_[i];
+
+    if (std::isnan(joint_position_[i]))
+    {
+      ROS_ERROR_STREAM_NAMED(name_, "NaN found");
+      std::cout << std::endl;
+      std::cout << "i: " << i << " name: " << jm->getName() << std::endl;
+      std::cout << "joint_model_group: " << jmg->getName() << std::endl;
+      std::cout << "getVariableCount(): " << jm->getVariableCount() << std::endl;
+      std::cout << "joint_position_[i]: " << joint_position_[i] << std::endl;
+      std::cout << "joint_position_command_[i]: " << joint_position_command_[i] << std::endl;
+      robot_state.printStateInfo();
+      exit(-1);
+    }
   }
 }
 
