@@ -2,8 +2,8 @@
 Changelog for package moveit_sim_controller
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.0 (2016-10-20)
+------------------
 * Add C++11 support
 * Fixed occational Nan
 * Minor formatting
