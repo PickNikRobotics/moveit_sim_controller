@@ -2,6 +2,14 @@
 Changelog for package moveit_sim_controller
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Add C++11 support
+* Fixed occational Nan
+* Minor formatting
+* added roslint and roslint changes
+* Contributors: Dave Coleman
+
 0.0.5 (2016-01-13)
 ------------------
 * Fixed deprecated API for rosparam_shortcuts
