@@ -2,15 +2,15 @@
 
 A simulation interface for a hardware interface for ros_control, and loads default joint values from SRDF
 
-Intended to replace ``moveit_fake_controller_manager`` - this supports simulated trajectory following and loading an inital position
+Intended to replace ``moveit_fake_controller_manager`` - this repo almost exactly replicates a ros_control hardware setup, and has the new feature of being able to specify an inital position.
 
-Developed by [Dave Coleman](http://dav.ee/) at the University of Colorado Boulder
+Developed by [Dave Coleman](http://dav.ee/) at PickNik LLC
 
 Status:
 
- * [![Build Status](https://travis-ci.org/davetcoleman/moveit_sim_controller.svg)](https://travis-ci.org/davetcoleman/moveit_sim_controller) Travis CI
- * [![Devel Job Status](http://jenkins.ros.org/buildStatus/icon?job=devel-indigo-moveit_sim_controller)](http://jenkins.ros.org/job/devel-indigo-moveit_sim_controller) Devel Job Status
- * [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-moveit-sim-controller_binarydeb_trusty_amd64)](http://jenkins.ros.org/job/ros-indigo-moveit-sim-controller_binarydeb_trusty_amd64/) AMD64 Debian Job Status
+ * [![Build Status](https://travis-ci.org/davetcoleman/moveit_sim_controller.svg)](https://travis-ci.org/davetcoleman/moveit_sim_controller) Travis - Continuous Integration
+ * [![Build Status](http://build.ros.org/buildStatus/icon?job=Kbin_uX64__moveit_sim_controller__ubuntu_xenial_amd64__binary)](http://build.ros.org/view/Kbin_uX64/job/Kbin_uX64__moveit_sim_controller__ubuntu_xenial_amd64__binary/) ROS Buildfarm - AMD64 Xenial Debian Build
+ * [![Build Status](http://build.ros.org/buildStatus/icon?job=Kdev__moveit_sim_controller__ubuntu_xenial_amd64)](http://build.ros.org/view/Kdev/job/Kdev__moveit_sim_controller__ubuntu_xenial_amd64/) ROS Buildfarm - AMD64 Xenial Debian Build
 
 ![](resources/screenshot.png)
 
@@ -19,12 +19,24 @@ Status:
 ### Ubuntu Debian
 
 ```
-sudo apt-get install ros-indigo-moveit-sim-controller
+sudo apt-get install ros-kinetic-moveit-sim-controller
 ```
 
 ## Code API
 
-See [Class Reference](http://docs.ros.org/indigo/api/moveit_sim_controller/html/)
+See [Class Reference](http://docs.ros.org/kinetic/api/moveit_sim_controller/html/)
+
+## Quick Start
+
+Our example uses the UR5 robot:
+
+    sudo apt-get install ros-kinetic-ur5-moveit-config
+    roslaunch moveit_sim_controller ur5_rviz.launch
+    roslaunch moveit_sim_controller ur5_sim_controller.launch
+
+You should see the robot launch in Rviz with the arm oriented straight up, which is not the zero/home position. You can change the start position by editing in ``config/ur5_controllers.yaml`` the value ``joint_model_group_pose``.
+
+With this simulator you should also be able to use ``rostopic echo`` to see the ``joint_states`` and ``tf`` it is publishing - essentially you have just simulated a full ros_control-based robot without needing hardware. To test with an example joint trajectory, see the demo code in [ros_control_boilerplate](https://github.com/davetcoleman/ros_control_boilerplate).
 
 ## Usage
 

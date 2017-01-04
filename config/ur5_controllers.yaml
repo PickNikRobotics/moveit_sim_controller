@@ -1,0 +1,39 @@
+# Simulation settings
+generic_hw_control_loop:
+  loop_hz: 100
+  cycle_time_error_threshold: 0.02
+
+# MoveIt-specific simulation settings
+moveit_sim_hw_interface:
+  joint_model_group: manipulator
+  joint_model_group_pose: up
+
+# Settings for generic ros_control hardware interface
+hardware_interface:
+   joints:
+      - elbow_joint
+      - shoulder_lift_joint
+      - shoulder_pan_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
+
+# Publish all joint states ----------------------------------
+joint_state_controller:
+   type:         joint_state_controller/JointStateController
+   publish_rate: 100
+
+# Position Joint Trajectory Controller -------------------------------
+# For detailed explanations of parameter see http://wiki.ros.org/joint_trajectory_controller
+position_trajectory_controller:
+   type: position_controllers/JointTrajectoryController
+   joints:
+      - elbow_joint
+      - shoulder_lift_joint
+      - shoulder_pan_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
+   constraints:
+      goal_time: 1.0 # If the timestamp of the goal trajectory point is t, then following the trajectory succeeds if it reaches the goal within t +/- goal_time, and aborts otherwise.
+      stopped_velocity_tolerance: 0.01 # Velocity to be considered approximately equal to zero
