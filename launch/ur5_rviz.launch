@@ -4,9 +4,9 @@
   <arg unless="$(arg debug)" name="launch_prefix" value="" />
   <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
 
-  <arg name="config" default="false" />
+  <arg name="config" default="true" />
   <arg unless="$(arg config)" name="command_args" value="" />
-  <arg     if="$(arg config)" name="command_args" value="-d $(find moveit_sim_controller)/launch/orb_motion_rviz.rviz" />
+  <arg     if="$(arg config)" name="command_args" value="-d $(find moveit_sim_controller)/launch/ur5.rviz" />
 
   <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
   <include file="$(find ur5_moveit_config)/launch/planning_context.launch">
@@ -15,8 +15,10 @@
   </include>
 
   <node name="$(anon rviz)" launch-prefix="$(arg launch_prefix)" pkg="rviz" type="rviz" respawn="false"
-	args="$(arg command_args)" output="screen">
-    <rosparam command="load" file="$(find ur5_moveit_config)/config/kinematics.yaml"/>
-  </node>
+	args="$(arg command_args)" output="screen"/>
+
+  <!-- Node for publishing the transform from the world to the Pick-It frame -->
+  <node name="static_tf" type="static_transform_publisher"
+      args="0 0 0 3.14 0 0 /world /fixed_base" pkg="tf2_ros" />
 
 </launch>

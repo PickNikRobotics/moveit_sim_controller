@@ -10,13 +10,14 @@ moveit_sim_hw_interface:
 
 # Settings for generic ros_control hardware interface
 hardware_interface:
-   joints:
-      - elbow_joint
-      - shoulder_lift_joint
-      - shoulder_pan_joint
-      - wrist_1_joint
-      - wrist_2_joint
-      - wrist_3_joint
+  sim_control_mode: 0 # position
+  joints:
+    - elbow_joint
+    - shoulder_lift_joint
+    - shoulder_pan_joint
+    - wrist_1_joint
+    - wrist_2_joint
+    - wrist_3_joint
 
 # Publish all joint states ----------------------------------
 joint_state_controller:
