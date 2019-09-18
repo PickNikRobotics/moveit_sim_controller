@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>moveit_sim_controller</name>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
   <description>A simulation interface for a hardware interface for ros_control, and loads default joint values from SRDF</description>
 
   <maintainer email="davetcoleman@gmail.com">Dave Coleman</maintainer>

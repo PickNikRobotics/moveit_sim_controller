@@ -2,8 +2,8 @@
 Changelog for package moveit_sim_controller
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.0 (2019-09-18)
+------------------
 * Cleanup UR5 example (`#2 <https://github.com/PickNikRobotics/moveit_sim_controller/issues/2>`_)
 * Update README
 * Add example simulated robot with UR5
