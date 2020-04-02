@@ -94,9 +94,10 @@ void MoveItSimHWInterface::loadDefaultJointValues()
   {
     ROS_WARN_STREAM_NAMED(name_, "Unable to find pose " << joint_model_group_pose_ << " for the fake controller "
                                                                                       "manager");
-    return;
   }
-  ROS_INFO_STREAM_NAMED(name_, "Set joints to pose " << joint_model_group_pose_);
+  else {
+    ROS_INFO_STREAM_NAMED(name_, "Set joints to pose " << joint_model_group_pose_);
+  }
 
   for (std::size_t i = 0; i < joint_names_.size(); ++i)
   {

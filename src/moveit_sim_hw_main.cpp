@@ -39,6 +39,15 @@
 #include <ros_control_boilerplate/generic_hw_control_loop.h>
 #include <moveit_sim_controller/moveit_sim_hw_interface.h>
 
+// Support released kinetic & melodic versions of GenericHWControlLoop
+template <typename T, typename = decltype(T::run)>
+inline void LOOP_RUN(T& loop) {
+  loop.run();
+};
+template <typename T> inline void LOOP_RUN(T& loop) {
+  ros::waitForShutdown();
+};
+
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "moveit_sim_hw_main");
@@ -56,9 +65,7 @@ int main(int argc, char** argv)
 
   // Start the control loop
   ros_control_boilerplate::GenericHWControlLoop control_loop(nh, moveit_sim_hw_iface);
-
-  // Wait until shutdown signal recieved
-  ros::waitForShutdown();
+  LOOP_RUN(control_loop); // blocks until shutdown is signaled
 
   return 0;
 }
