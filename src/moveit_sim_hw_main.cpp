@@ -40,13 +40,10 @@
 #include <moveit_sim_controller/moveit_sim_hw_interface.h>
 
 // Support released kinetic & melodic versions of GenericHWControlLoop
-template <typename T, typename = decltype(T::run)>
-inline void LOOP_RUN(T& loop) {
-  loop.run();
-};
-template <typename T> inline void LOOP_RUN(T& loop) {
-  ros::waitForShutdown();
-};
+// can be dropped once kinetic is not supported anymore
+template <typename ...> using void_t = void;
+template <typename T, typename = void> struct WithRun : public T { using T::T; void run(){ ros::waitForShutdown(); } };
+template<typename T> struct WithRun<T, void_t<decltype(&T::run)> > : public T { using T::T; };
 
 int main(int argc, char** argv)
 {
@@ -64,8 +61,8 @@ int main(int argc, char** argv)
   moveit_sim_hw_iface->init();
 
   // Start the control loop
-  ros_control_boilerplate::GenericHWControlLoop control_loop(nh, moveit_sim_hw_iface);
-  LOOP_RUN(control_loop); // blocks until shutdown is signaled
+  WithRun<ros_control_boilerplate::GenericHWControlLoop> control_loop(nh, moveit_sim_hw_iface);
+  control_loop.run(); // blocks until shutdown is signaled
 
   return 0;
 }
