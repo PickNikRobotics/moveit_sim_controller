@@ -6,9 +6,9 @@ Intended to replace ``moveit_fake_controller_manager`` - this repo almost exactl
 
 <img src="https://picknik.ai/assets/images/logo.jpg" width="100">
 
-Developed by Dave Coleman at [PickNik Consulting](http://picknik.ai/)
+Developed at [PickNik Robotics](https://picknik.ai/) by Dave Coleman. Need professional ROS development and consulting? Contact us at projects@picknik.ai for a free consultation.
 
-Status:
+## Status:
 
 * [![Build Status](https://travis-ci.org/PickNikRobotics/moveit_sim_controller.svg)](https://travis-ci.org/ros-planning/moveit_sim_controller) Travis CI
 * [![Build Status](http://build.ros.org/buildStatus/icon?job=Kbin_uX64__moveit_sim_controller__ubuntu_xenial_amd64__binary)](http://build.ros.org/view/Kbin_uX64/job/Kbin_uX64__moveit_sim_controller__ubuntu_xenial_amd64__binary/) ROS Buildfarm - AMD64 Xenial Debian Build - Ubuntu 16.04 LTS
