@@ -6,7 +6,7 @@ Intended to replace ``moveit_fake_controller_manager`` - this repo almost exactl
 
 <img src="https://picknik.ai/assets/images/logo.jpg" width="100">
 
-Developed at [PickNik Robotics](https://picknik.ai/) by Dave Coleman. Need professional ROS development and consulting? Contact us at projects@picknik.ai for a free consultation.
+This open source project developed at [PickNik Robotics](https://picknik.ai/). Need professional ROS development and consulting? Contact us at projects@picknik.ai for a free consultation.
 
 ## Status:
 
