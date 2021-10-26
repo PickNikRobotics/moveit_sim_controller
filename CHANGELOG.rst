@@ -2,8 +2,8 @@
 Changelog for package moveit_sim_controller
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.0 (2021-10-26)
+------------------
 * Fix shared pointer conversion bug (`#9 <https://github.com/PickNikRobotics/moveit_sim_controller/issues/9>`_)
 * Fixup SFINAE detection of boilerplate API (`#6 <https://github.com/PickNikRobotics/moveit_sim_controller/issues/6>`_)
 * Cleanup & Fix main executable (`#4 <https://github.com/PickNikRobotics/moveit_sim_controller/issues/4>`_)
