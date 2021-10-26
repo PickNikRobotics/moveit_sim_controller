@@ -2,6 +2,15 @@
 Changelog for package moveit_sim_controller
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fix shared pointer conversion bug (`#9 <https://github.com/PickNikRobotics/moveit_sim_controller/issues/9>`_)
+* Fixup SFINAE detection of boilerplate API (`#6 <https://github.com/PickNikRobotics/moveit_sim_controller/issues/6>`_)
+* Cleanup & Fix main executable (`#4 <https://github.com/PickNikRobotics/moveit_sim_controller/issues/4>`_)
+  * if the pose does not exist, still initialize joints Otherwise this warning should be fatal...
+  * conditionally call loop only when available
+* Contributors: Dave Coleman, Henning Kayser, Jafar Abdi, Michael Görner, Rick Staa
+
 0.2.0 (2019-09-18)
 ------------------
 * Cleanup UR5 example (`#2 <https://github.com/PickNikRobotics/moveit_sim_controller/issues/2>`_)
