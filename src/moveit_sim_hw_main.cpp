@@ -56,7 +56,7 @@ int main(int argc, char** argv)
   spinner.start();
 
   // Create the hardware interface specific to your robot
-  boost::shared_ptr<moveit_sim_controller::MoveItSimHWInterface> moveit_sim_hw_iface(
+  std::shared_ptr<moveit_sim_controller::MoveItSimHWInterface> moveit_sim_hw_iface(
       new moveit_sim_controller::MoveItSimHWInterface(nh));
   moveit_sim_hw_iface->init();
 
