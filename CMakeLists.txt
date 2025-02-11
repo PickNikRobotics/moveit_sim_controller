@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(moveit_sim_controller)
 
-# C++ 11
-set(CMAKE_CXX_FLAGS "-std=c++11 -Wall ${CMAKE_CXX_FLAGS}")
-
 find_package(catkin REQUIRED COMPONENTS
   moveit_core
   moveit_ros_planning
